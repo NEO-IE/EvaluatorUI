@@ -6,6 +6,7 @@ if( !isset( $_SESSION ) ) {
     //session_destroy();
     session_start();
 }
+
 if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
     $_SESSION['index'] = $_SESSION['index'] + 1;
     echo "Previous was " . $_POST["valid"]. "<br/>";
