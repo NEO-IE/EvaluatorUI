@@ -9,9 +9,12 @@ if( !isset( $_SESSION ) ) {
 if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
     $_SESSION['index'] = $_SESSION['index'] + 1;
     echo "Previous was " . $_POST["valid"]. "<br/>";
+    //insert your function here
     if($_SESSION['index'] >= $_SESSION['count']) { //done with the matches
         $_SESSION['index'] = 0;
         session_destroy();
+        echo "Ok bye.";
+        return;
     }
     //echo "Index : " + $_SESSION['index'] + "<br/>";
 } else {
