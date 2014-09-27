@@ -69,10 +69,10 @@ $sentence = $matchSplit[11];
 <form id = "qtn" name = "qtn" role = 'form' method = 'post' action = 'eval.php'>
 <input type='hidden' id = "valid" name = 'valid'/>
 </form>
-<span id = "tick"></span>
 </div>
 </div>
-<span style = "float:right" class="glyphicon glyphicon-search"></span>
-<span style = "float:left" class="glyphicon glyphicon-search"></span>
+<center><img id = "verdict" height = 42/></center>
+<img src = "imgs/right.png" style = "float:right"/>
+<img src = "imgs/left.png" style = "float:left"/>
 </body>
 </html>

@@ -9,10 +9,10 @@ $(document).ready(function() {
             document.getElementById("qtn").submit();
         } else if(code == up) {
             $("#valid").val("true");
-            $("#tick").html("<span float = 'right' class='glyphicon glyphicon-ok'></span>");
+            $("#verdict").attr("src", "imgs/tick.png");
         } else if(code == down) {
             $("#valid").val("false");
-            $("#tick").html("<span float = 'right' class='glyphicon glyphicon-remove'></span>");
+            $("#verdict").attr("src", "imgs/cross.png");
         }
     });
     });
