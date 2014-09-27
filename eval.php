@@ -35,11 +35,18 @@ $countryName = $matchSplit[4];
 $number = $matchSplit[5];
 $relation = $matchSplit[10];
 $sentence = $matchSplit[11];
+
 ?>
 <html>
 <head>
 <!-- Latest compiled and minified CSS -->
-
+<style>
+body {
+    background-color: #f5f5f5;
+    position: relative;
+    margin-top: 40px;
+}
+</style>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -51,7 +58,7 @@ $sentence = $matchSplit[11];
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src = "kb.js"></script>
 </head>
-<body>
+<body style = "margin-top:120px">
 <div class = "container">
 <table class = "table table-bordered" border = "1px">
 <tr>
