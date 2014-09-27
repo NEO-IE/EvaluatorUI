@@ -6,7 +6,6 @@ if(!isset($_SESSION)) {
 if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
     //code to insert into database	
 	insertToDb($_SESSION['dbhandle'], $_SESSION['matches'][$_SESSION['index']], $_POST['valid'], 1);
-
     $_SESSION['index'] = $_SESSION['index'] + 1;
     if($_SESSION['index'] >= $_SESSION['count']) { //done with the matches
         $_SESSION['index'] = 0;
@@ -37,13 +36,12 @@ $number = $matchSplit[5];
 $relation = $matchSplit[10];
 $sentence = $matchSplit[11];
 ?>
-<?php echo "<br/>".$sentence."<br/>".$countryName." ".$number." ".$relation."<br/>"; ?>
 <html>
-<body>
 <head>
 <!-- Latest compiled and minified CSS -->
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
 <!-- Optional theme -->
@@ -51,22 +49,30 @@ $sentence = $matchSplit[11];
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src = "kb.js"></script>
 </head>
-<div class = 'container'>
-<form role = 'form' method = 'post' action = 'eval.php'>
-<div class = 'form-group'>
-<div class = 'checkbox'>
-<label class="radio-inline">
-  <input type="radio" name="valid" id="inlineRadio1" value="true"> Yes
-</label>
-<label class="radio-inline">
-  <input type="radio" name="valid" id="inlineRadio2" value="false"> No
-</label>
-<input type='submit' name='submit' value='Next'>
-</div>
-</div>
-</form>
+<body>
+<div class = "container">
+<table class = "table table-bordered" border = "1px">
+<tr>
+<td><?php echo "$sentence"; ?></td>
+</tr>
+</table >
+<table class = "table" border = "1px" cellspacing = "3px" cellpadding = "4px">
+<tr class = "active">
+<td width = "30%"><?php echo $countryName; ?></td>
+<td width = "30%"><?php echo " ".$number." "; ?> </td>
+<td width = "30%"><?php echo "$relation.<br/>"; ?></td>
+</tr>
+</table>
 
+<form id = "qtn" name = "qtn" role = 'form' method = 'post' action = 'eval.php'>
+<input type='hidden' id = "valid" name = 'valid'/>
+</form>
+<span id = "tick"></span>
 </div>
+</div>
+<span style = "float:right" class="glyphicon glyphicon-search"></span>
+<span style = "float:left" class="glyphicon glyphicon-search"></span>
 </body>
 </html>
