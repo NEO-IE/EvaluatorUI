@@ -39,18 +39,23 @@ $countryName = $matchSplit[4];
 $number = $matchSplit[5];
 $relation = $matchSplit[10];
 $sentence = $matchSplit[11];
+$startOff = $matchSplit[6];
+$endOff = $matchSplit[7];
+$l = strlen($sentence);
+$annonSent = "";
+for($i = 0; $i < $l; $i++) {
+    if($i == $startOff) {
+        $annonSent = $annonSent . "<mark  style='background-color:yellow;'>";
+    } else if($i == $endOff) {
+        $annonSent = $annonSent . "</mark>";
+    }
+    $annonSent = $annonSent . $sentence[$i];
+}
 
 ?>
 <html>
 <head>
 <!-- Latest compiled and minified CSS -->
-<style>
-body {
-    background-color: #f5f5f5;
-    position: relative;
-    margin-top: 40px;
-}
-</style>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -62,11 +67,13 @@ body {
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src = "kb.js"></script>
 </head>
-<body style = "margin-top:120px">
-<div class = "container">
-<table class = "table table-bordered" border = "1px">
+<body>
+<img src = "imgs/right.png"  style = "float:right;margin-top:80px"/>
+<img src = "imgs/left.png " style = "float:left;margin-top:80px"/>
+<div class = "container" style = "margin-top:150px">
+<table class = "table table-bordered" border = "1px" style>
 <tr>
-<td><?php echo "$sentence"; ?></td>
+<td><?php echo "$annonSent"; ?></td>
 </tr>
 </table >
 <table class = "table" border = "1px" cellspacing = "3px" cellpadding = "4px">
@@ -84,7 +91,12 @@ body {
 </div>
 </div>
 <center><img id = "verdict" src = "imgs/equal.jpg" height = 42/></center>
-<img src = "imgs/right.png" style = "float:right"/>
-<img src = "imgs/left.png" style = "float:left"/>
+
+<div class="progress" style = "margin-top:300px">
+  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+    <span class="sr-only">60% Complete</span>
+  </div>
+</div>
+
 </body>
 </html>
