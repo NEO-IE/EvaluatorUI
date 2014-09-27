@@ -6,6 +6,10 @@ $(document).ready(function() {
         var right = 39;
         var down = 40;
         if (code == right) {
+            $("#direction").val("1");
+            document.getElementById("qtn").submit();
+        } else if (code == left) {
+            $("#direction").val("2");
             document.getElementById("qtn").submit();
         } else if(code == up) {
             $("#valid").val("true");

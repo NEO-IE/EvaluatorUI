@@ -6,7 +6,11 @@ if(!isset($_SESSION)) {
 if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
     //code to insert into database	
 	insertToDb($_SESSION['dbhandle'], $_SESSION['matches'][$_SESSION['index']], $_POST['valid'], 1);
-    $_SESSION['index'] = $_SESSION['index'] + 1;
+    if($_POST['direction'] == 1) { //right
+        $_SESSION['index'] = $_SESSION['index'] + 1;
+    } else {
+        $_SESSION['index'] = ($_SESSION['index'] == 0) ? 0 : $_SESSION['index'] - 1;
+    }
     if($_SESSION['index'] >= $_SESSION['count']) { //done with the matches
         $_SESSION['index'] = 0;
 	    mysqli_close($_SESSION['dbhandle']);	//closing the connection.	
@@ -75,10 +79,11 @@ body {
 
 <form id = "qtn" name = "qtn" role = 'form' method = 'post' action = 'eval.php'>
 <input type='hidden' id = "valid" name = 'valid'/>
+<input type='hidden' id = "direction" value = "1" name = 'direction'/>
 </form>
 </div>
 </div>
-<center><img id = "verdict" height = 42/></center>
+<center><img id = "verdict" src = "imgs/equal.jpg" height = 42/></center>
 <img src = "imgs/right.png" style = "float:right"/>
 <img src = "imgs/left.png" style = "float:left"/>
 </body>
