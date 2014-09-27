@@ -1,5 +1,17 @@
 <html>
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
 <body>
+<div class = "container">
+
 <?php
 
 //ashish
@@ -73,10 +85,10 @@ if( !isset( $_SESSION ) ) {
     //session_destroy();
     session_start();
 
-	$username = "root";
+	$username = "aman";
 	$password = "";
 	$hostname = "localhost";
-	$db = "sentenceMatching";
+	$db = "test";
 	//connection to the database
 	$dbhandle = mysqli_connect($hostname, $username, $password, $db)
   		or die("Unable to connect to MySQL");
@@ -86,7 +98,6 @@ if( !isset( $_SESSION ) ) {
 }
 
 if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
-    echo "Previous was " . $_POST["valid"]. "<br/>";
 
     //code to insert into database	
 
@@ -117,13 +128,28 @@ $countryName = $matchSplit[4];
 $number = $matchSplit[5];
 $relation = $matchSplit[10];
 $sentence = $matchSplit[11];
-echo $sentence."<br/>".$countryName." ".$number." ".$relation."<br/>";
-echo "<form method = 'post' action = eval.php>";
-echo "Is Valid : Yes <input type = 'radio' name = 'valid' value = 'true'>";
-echo " No <input type = 'radio' name = 'valid' value = 'false'>";
-echo "<input type='submit' name='submit' value='Next'>";
-echo "</form>";
 
+$annoSent = "";
+for($i = 0; $i < $sentLen; $i++) {
+    if($i == $startOff) {
+
+        
 ?>
+<?php echo $sentence."<br/>".$countryName." ".$number." ".$relation."<br/>"; ?>
+<form role = 'form' method = 'post' action = eval.php>
+<div class = 'form-group'>
+<div class = 'checkbox'>
+<label class="radio-inline">
+  <input type="radio" name="valid" id="inlineRadio1" value="true"> Yes
+</label>
+<label class="radio-inline">
+  <input type="radio" name="valid" id="inlineRadio2" value="false"> No
+</label>
+<input type='submit' name='submit' value='Next'>
+</div>
+</div>
+</form>
+
+</div>
 </body>
 </html>
