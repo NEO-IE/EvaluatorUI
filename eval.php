@@ -81,6 +81,7 @@ function insertToDB($dbhandle, $String, $response, $Heuristic){
 }
 
 //sg
+/* 
 if( !isset( $_SESSION ) ) {
     //session_destroy();
     session_start();
@@ -96,7 +97,7 @@ if( !isset( $_SESSION ) ) {
 
 	$_SESSION['dbhandle'] = $dbhandle;
 }
-
+*/
 if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
 
     //code to insert into database	
@@ -117,7 +118,8 @@ if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
     //echo "Index : " + $_SESSION['index'] + "<br/>";
 } else {
     $_SESSION['reloaded'] = 1;
-    $_SESSION['matches'] = file("sampledMatches.tsv");
+    $file = $_SESSION['file'];
+    $_SESSION['matches'] = file($file);
     $_SESSION['count'] = count($_SESSION['matches']);
     $_SESSION['index'] = 0;
     //echo "xIndex : " + $_SESSION['index'] + "<br/>";
