@@ -68,6 +68,12 @@ for($i = 0; $i < $l; $i++) {
 <script src = "kb.js"></script>
 </head>
 <body>
+<div class="progress">
+<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $_SESSION['index']; ?>" aria-valuemin="1" aria-valuemax="<?php echo $_SESSION['count']; ?>" style= "width: <?php echo ($_SESSION['index'] / $_SESSION['count']) * 100 ?>%;">
+<?php $curr = $_SESSION['index'] + 1;echo $curr. " / ". $_SESSION['count']." done"; ?>
+  </div>
+</div>
+
 <img src = "imgs/right.png"  style = "float:right;margin-top:80px"/>
 <img src = "imgs/left.png " style = "float:left;margin-top:80px"/>
 <div class = "container" style = "margin-top:150px">
@@ -90,13 +96,7 @@ for($i = 0; $i < $l; $i++) {
 </form>
 </div>
 </div>
-<center><img id = "verdict" src = "imgs/equal.jpg" height = 42/></center>
-
-<div class="progress" style = "margin-top:300px">
-<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $_SESSION['index']; ?>" aria-valuemin="0" aria-valuemax="<?php echo $_SESSION['count']; ?>" style= "width : <?php echo ($_SESSION['index'] / $_SESSION['count']) * 100 ?>%;">
-    <?php $curr = $_SESSION['index'] + 1;echo $curr. " / ". $_SESSION['count']." done"; ?>
-  </div>
-</div>
+<center><img id = "verdict" src = "imgs/equal.jpg" height = "42" /></center>
 
 </body>
 </html>
