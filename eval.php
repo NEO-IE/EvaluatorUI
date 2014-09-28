@@ -93,8 +93,8 @@ for($i = 0; $i < $l; $i++) {
 <center><img id = "verdict" src = "imgs/equal.jpg" height = 42/></center>
 
 <div class="progress" style = "margin-top:300px">
-  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-    <span class="sr-only">60% Complete</span>
+<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $_SESSION['index']; ?>" aria-valuemin="0" aria-valuemax="<?php echo $_SESSION['count']; ?>" style= "width : <?php echo ($_SESSION['index'] / $_SESSION['count']) * 100 ?>%;">
+    <?php $curr = $_SESSION['index'] + 1;echo $curr. " / ". $_SESSION['count']." done"; ?>
   </div>
 </div>
 
