@@ -1,11 +1,22 @@
 <?php
+
+function getStartOccur($string, $word){
+    $positions = array();
+    $pos = -1;
+    while( ($pos = strpos($string, $word, $pos+1)) != false){
+        $positions[] = $pos;
+    }
+    return $positions;
+}
+
 include 'insert_db.php';
 if(!isset($_SESSION)) {
     session_start();
 }
 if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
-    //code to insert into database	
-	insertToDb($_SESSION['dbhandle'], $_SESSION['matches'][$_SESSION['index']], $_POST['valid'], 1);
+
+    insertToDb($_SESSION['dbhandle'], $_POST['valid'], $_SESSION['Heuristic']);
+
     if($_POST['direction'] == 1) { //right
         $_SESSION['index'] = $_SESSION['index'] + 1;
     } else {
@@ -22,13 +33,16 @@ if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
 	$username = "aman";
 	$password = "";
 	$hostname = "localhost";
-	//$db = "test";
+	$db = "test";
 	//connection to the database
-	$dbhandle = mysqli_connect($hostname, $username, $password, $db)
+	$dbhandle = new mysqli($hostname, $username, $password, $db)
   		or die("Unable to connect to MySQL");
 	$_SESSION['dbhandle'] = $dbhandle;
     $_SESSION['reloaded']=1;
-    $file = "sampledMatches.tsv";
+    $file = "upload/".$_POST['file'];
+    $_SESSION['Heuristic'] = $_POST['Heuristic']; 
+//            $file = "sampledMatches.tsv";
+//    $file = $_SESSION['file'];
     $_SESSION['matches'] = file($file);
     $_SESSION['count'] = count($_SESSION['matches']);
     $_SESSION['index'] = 0;
@@ -42,11 +56,22 @@ $sentence = $matchSplit[11];
 $startOff = $matchSplit[6];
 $endOff = $matchSplit[7];
 $l = strlen($sentence);
+
+$positions = getStartOccur($sentence, $countryName);
+$posCount = count($positions);
+$wordlen = strlen($countryName);
+
 $annonSent = "";
+$posCtr = 0;
 for($i = 0; $i < $l; $i++) {
     if($i == $startOff) {
         $annonSent = $annonSent . "<mark  style='background-color:yellow;'>";
     } else if($i == $endOff) {
+        $annonSent = $annonSent . "</mark>";
+    }if($posCtr < $posCount && $i == $positions[$posCtr]){
+        $annonSent = $annonSent . "<mark style='background-color:blue;'>";
+    }else if($posCtr < $posCount && $i == ($positions[$posCtr] + $wordlen)){
+        $posCtr += 1;
         $annonSent = $annonSent . "</mark>";
     }
     $annonSent = $annonSent . $sentence[$i];
