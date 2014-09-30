@@ -1,7 +1,8 @@
 <?php
 //ashish
-function insertToDB($dbhandle, $response, $Heuristic){
+function insertToDB($response){
 
+	$Heuristic = $_SESSION['Heuristic'];
 	$matchSplit = explode("\t", $_SESSION['matches'][$_SESSION['index']]);
 	$username = "aman";
 	$password = "";
@@ -21,26 +22,17 @@ function insertToDB($dbhandle, $response, $Heuristic){
 
 	$sql = "select * from SentenceMatcher where SENTID = '$sentenceID' and Country = '$countryName' and st_offset = $st_offset and end_offset = $end_offset and relation = '$relation';";
     
-    /*
-	$row = array();
-    $result=mysql_query($dbhandle,$sql);
-  	$row=mysql_fetch_row($result);
-    print_r($row);
-     */
-    
-	if ($result=mysqli_query($dbhandle, $sql))
-    {
-        echo "Fetching results<br/>";
+	if ($result = $dbhandle->query($sql))
+    	{
+//	       	echo "Fetching results<br/>";
         
-  		// Fetch one and one row
   		$row=mysqli_fetch_row($result);
-        print_r($row);
-
+//        	print_r($row);
   		mysqli_free_result($result);
 	}		
 
 	if( empty($row)){   	//insert into db
-        echo "Found empty, initializing by insertion<br/>";
+	       // echo "Found empty, initializing by insertion<br/>";
 		
 		$insert_str = "Insert into SentenceMatcher values('','$sentenceID', '$countryName', $st_offset, $end_offset, $number,  '$relation', '$sentence', ";
 
@@ -55,16 +47,12 @@ function insertToDB($dbhandle, $response, $Heuristic){
 		}
 		$insert_str .= ");";
 
-        echo $insert_str . "<br>";
+//        	echo $insert_str . "<br>";
 
-        $result = mysqli_query($dbhandle,$insert_str);
-        if (!$result) {
-            trigger_error('Invalid query: ' . mysql_error());
-        } else {
-            echo "Success<br/>";
-        }
-
-
+        	$result = $dbhandle->query($insert_str);
+        	if (!$result) {
+            		trigger_error('Invalid query: ' . mysql_error());
+        	}
 	}else{			//update into db
 		$ID = $row[0];
 		
@@ -79,12 +67,14 @@ function insertToDB($dbhandle, $response, $Heuristic){
 			$update_str .= "Heuristic4 = '$response' ";
 		}
 
-        $update_str .= "where ID = $ID;";
+        	$update_str .= "where ID = $ID;";
 
-        echo $update_str . "<br>";
-		mysql_query($dbhandle, $update_str);	
+ //       	echo $update_str . "<br>";
+		$result = $dbhandle->query($update_str);	
+		 if (!$result) {
+                        trigger_error('Invalid query: ' . mysql_error());
+                }
 	}		
-	
-
+	$dbhandle->close();
 }
 ?>

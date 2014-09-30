@@ -15,7 +15,7 @@ if(!isset($_SESSION)) {
 }
 if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
 
-    insertToDb($_SESSION['dbhandle'], $_POST['valid'], $_SESSION['Heuristic']);
+    insertToDb($_POST['valid']);
 
     if($_POST['direction'] == 1) { //right
         $_SESSION['index'] = $_SESSION['index'] + 1;
@@ -24,28 +24,29 @@ if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
     }
     if($_SESSION['index'] >= $_SESSION['count']) { //done with the matches
         $_SESSION['index'] = 0;
-	    mysqli_close($_SESSION['dbhandle']);	//closing the connection.	
+//	mysqli_close($_SESSION['dbhandle']);	//closing the connection.	
         session_destroy();
         echo "Ok bye.";
         return;
     }
 } else {
-	$username = "aman";
-	$password = "";
-	$hostname = "localhost";
-	$db = "test";
+
+//	$username = "aman";
+//	$password = "";
+//	$hostname = "localhost";
+//	$db = "test";
 	//connection to the database
-	$dbhandle = new mysqli($hostname, $username, $password, $db)
-  		or die("Unable to connect to MySQL");
-	$_SESSION['dbhandle'] = $dbhandle;
-    $_SESSION['reloaded']=1;
-    $file = "upload/".$_POST['file'];
-    $_SESSION['Heuristic'] = $_POST['Heuristic']; 
-//            $file = "sampledMatches.tsv";
-//    $file = $_SESSION['file'];
-    $_SESSION['matches'] = file($file);
-    $_SESSION['count'] = count($_SESSION['matches']);
-    $_SESSION['index'] = 0;
+//	$dbhandle = new mysqli($hostname, $username, $password, $db)
+// 		or die("Unable to connect to MySQL");
+//	$_SESSION['dbhandle'] = $dbhandle;
+    	$_SESSION['reloaded']=1;
+    	$file = "upload/".$_POST['file'];
+    	$_SESSION['Heuristic'] = $_POST['Heuristic']; 
+	//      $file = "sampledMatches.tsv";
+	//    	$file = $_SESSION['file'];
+    	$_SESSION['matches'] = file($file);
+    	$_SESSION['count'] = count($_SESSION['matches']);
+    	$_SESSION['index'] = 0;
 }
  
 $matchSplit = explode("\t", $_SESSION['matches'][$_SESSION['index']]);
@@ -81,15 +82,19 @@ for($i = 0; $i < $l; $i++) {
 <html>
 <head>
 <!-- Latest compiled and minified CSS -->
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-<!-- Latest compiled and minified CSS -->
+<script src="js_css/jquery-1.10.1.min.js"></script>
+<!-- Latest compiled and minified CSS 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+-->
+<link rel="stylesheet" href="js_css/bootstrap.min.css">
 
-<!-- Optional theme -->
+<!-- Optional theme 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+-->
+<link rel="stylesheet" href="js_css/bootstrap-theme.min.css">
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="js_css/bootstrap.min.js"></script>
 <script src = "kb.js"></script>
 </head>
 <body>
