@@ -50,10 +50,20 @@ if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
 //	$dbhandle = new mysqli($hostname, $username, $password, $db)
 // 		or die("Unable to connect to MySQL");
 //	$_SESSION['dbhandle'] = $dbhandle;
+
+	$target_dir = "upload/";
+	$target_file = $target_dir . basename ($_FILES["file"]["name"]);
+
+	if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+        	echo "The file ". basename( $_FILES["file"]["name"]). " has been uploaded.";
+    	} else {
+        	echo "Sorry, there was an error uploading your file.";
+		return;
+    	}
+
     	$_SESSION['reloaded']=1;
-    	$file = "upload/".$_POST['file'];
-	$_SESSION['file'] = $_POST['file'];
-    	$_SESSION['matches'] = file($file);
+	$_SESSION['file'] = basename($_FILES["file"]["name"]);
+    	$_SESSION['matches'] = file($target_file);
     	$_SESSION['count'] = count($_SESSION['matches']);
 	$count = $_SESSION['count'];
     	$_SESSION['index'] = 0;

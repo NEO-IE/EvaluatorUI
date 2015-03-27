@@ -4,8 +4,8 @@ function insertToDB($response){
 
 	$file = $_SESSION['file'];
 	$matchSplit = explode("\t", $_SESSION['matches'][$_SESSION['index']]);
-	$username = "root";
-	$password = "password";
+	$username = "aman";
+	$password = "";
 	$hostname = "localhost";
 	$db = "test";
 	
