@@ -8,8 +8,8 @@ if ($_FILES["file"]["error"] > 0) {
 	//session_destroy();
 		session_start();
 
-	        $username = "aman";
-        	$password = "";
+	        $username = "root";
+        	$password = "password";
         	$hostname = "localhost";
         	$db = "test";
         	//connection to the database

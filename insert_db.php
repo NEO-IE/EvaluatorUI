@@ -2,25 +2,25 @@
 //ashish
 function insertToDB($response){
 
-	$Heuristic = $_SESSION['Heuristic'];
+	$file = $_SESSION['file'];
 	$matchSplit = explode("\t", $_SESSION['matches'][$_SESSION['index']]);
-	$username = "aman";
-	$password = "";
+	$username = "root";
+	$password = "password";
 	$hostname = "localhost";
 	$db = "test";
 	
 	$dbhandle = new mysqli($hostname, $username, $password, $db)
   		or die("Unable to connect to MySQL");
 	
-	$sentenceID = $matchSplit[0];
-	$countryName = $matchSplit[4];
-	$st_offset = $matchSplit[6];
-	$end_offset = $matchSplit[7];
-	$number = $matchSplit[5];
-	$relation = $matchSplit[10];
-	$sentence = addslashes($matchSplit[11]);
+	$sentenceID = $matchSplit[6];
+	$countryName = $matchSplit[0];
+	$st_offset = $matchSplit[4];
+	$end_offset = $matchSplit[5];
+	$number = $matchSplit[3];
+	$relation = $matchSplit[7];
+	$sentence = addslashes($matchSplit[9]);
 
-	$sql = "select * from SentenceMatcher where SENTID = '$sentenceID' and Country = '$countryName' and st_offset = $st_offset and end_offset = $end_offset and relation = '$relation';";
+	$sql = "select * from SentenceMatcher where SENTID = '$sentenceID' and Country = '$countryName' and st_offset = $st_offset and end_offset = $end_offset and relation = '$relation' and evaluation_file = '$file';";
     
 	if ($result = $dbhandle->query($sql))
     	{
@@ -34,18 +34,11 @@ function insertToDB($response){
 	if( empty($row)){   	//insert into db
 	       // echo "Found empty, initializing by insertion<br/>";
 		
-		$insert_str = "Insert into SentenceMatcher values('','$sentenceID', '$countryName', $st_offset, $end_offset, $number,  '$relation', '$sentence', ";
+		$insert_str = "Insert into SentenceMatcher values('','$sentenceID', '$countryName', $st_offset, $end_offset, '$number',  '$relation', '$sentence', '$file', '$response');";
 
-		if($Heuristic == 1){
-			$insert_str .= "'$response', '','',''";
-		}else if($Heuristic == 2){
-			$insert_str .= "'','$response','',''";
-		}else if($Heuristic == 3){
-			$insert_str .= "'','','$response',''";
-		}else{
-			$insert_str .= "'','','','$response'";
+		if($response == "true"){
+			$_SESSION['trueCount'] = $_SESSION['trueCount'] + 1;
 		}
-		$insert_str .= ");";
 
 //        	echo $insert_str . "<br>";
 
@@ -55,21 +48,18 @@ function insertToDB($response){
         	}
 	}else{			//update into db
 		$ID = $row[0];
+		$old_response = $row[9];
 		
-		$update_str = "Update SentenceMatcher set ";
-		if($Heuristic == 1){
-			$update_str .= "Heuristic1 = '$response' ";
-		}else if($Heuristic == 2){
-			$update_str .= "Heuristic2 = '$response' ";
-		}else if($Heuristic == 3){
-			$update_str .= "Heuristic3 = '$response' ";
-		}else{
-			$update_str .= "Heuristic4 = '$response' ";
+		$update_str = "Update SentenceMatcher set response = '$response' where ID = $ID;";
+
+		if(($old_response == 'false' || $old_response == '' ) && $response == 'true'){
+			$_SESSION['trueCount'] = $_SESSION['trueCount'] + 1;
+		}else if($old_response == 'true' && $response == 'false'){
+			$_SESSION['trueCount'] = $_SESSION['trueCount'] - 1;
 		}
 
-        	$update_str .= "where ID = $ID;";
-
  //       	echo $update_str . "<br>";
+
 		$result = $dbhandle->query($update_str);	
 		 if (!$result) {
                         trigger_error('Invalid query: ' . mysql_error());

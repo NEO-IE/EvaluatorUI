@@ -25,6 +25,17 @@ if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
     if($_SESSION['index'] >= $_SESSION['count']) { //done with the matches
         $_SESSION['index'] = 0;
 //	mysqli_close($_SESSION['dbhandle']);	//closing the connection.	
+
+	//Print precision recall here..
+	$tCount = $_SESSION['trueCount'];
+	echo "True Count: $tCount <br>";
+	
+	$precision = $_SESSION['trueCount'] / $_SESSION['count'] * 100;
+	echo "Precision : $precision <br>"; 
+	$recall = $_SESSION['trueCount'] / 291 * 100;
+	echo "Recall : $recall <br>";
+	$f1_score = ((2 * $precision * $recall) / ($precision + $recall));
+	echo "F1 score: $f1_score <br>";
         session_destroy();
         echo "Ok bye.";
         return;
@@ -41,21 +52,21 @@ if(isset($_SESSION['reloaded']) && isset($_SESSION['count'])) {
 //	$_SESSION['dbhandle'] = $dbhandle;
     	$_SESSION['reloaded']=1;
     	$file = "upload/".$_POST['file'];
-    	$_SESSION['Heuristic'] = $_POST['Heuristic']; 
-	//      $file = "sampledMatches.tsv";
-	//    	$file = $_SESSION['file'];
+	$_SESSION['file'] = $_POST['file'];
     	$_SESSION['matches'] = file($file);
     	$_SESSION['count'] = count($_SESSION['matches']);
+	$count = $_SESSION['count'];
     	$_SESSION['index'] = 0;
+	$_SESSION['trueCount'] = 0;
 }
  
 $matchSplit = explode("\t", $_SESSION['matches'][$_SESSION['index']]);
-$countryName = $matchSplit[4];
-$number = $matchSplit[5];
-$relation = $matchSplit[10];
-$sentence = $matchSplit[11];
-$startOff = $matchSplit[6];
-$endOff = $matchSplit[7];
+$countryName = $matchSplit[0];
+$number = $matchSplit[3];
+$relation = $matchSplit[7];
+$sentence = $matchSplit[9];
+$startOff = $matchSplit[4];
+$endOff = $matchSplit[5];
 $l = strlen($sentence);
 
 $positions = getStartOccur($sentence, $countryName);

@@ -17,16 +17,6 @@ File: <select name="file">
 ?>
 </select>
 <br>
-
-Heurisitc: 
-<select name="Heuristic">
-<option value="1">Vanilla Matching</option>
-<option value="2">Distance Based Matching</option>
-<option value="3">Unit Based, Exact Matching</option>
-<option value="4">Unit Based, Distance Based Matching</option>
-</select>
-
-<br>
 <input type="submit" name="submit" value="Submit">
 
 
