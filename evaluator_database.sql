@@ -1,15 +1,59 @@
-create table SentenceMatcher(
-      ID int AUTO_INCREMENT PRIMARY KEY,
-      SENTID varchar(20) not null,
-      Country varchar(100) not null,
-      st_offset int not null,
-      end_offset int not null,
-      value double not null,
-      Relation varchar(100) not null, 
-      Sentence varchar(40000) not null,
-      Heuristic1 ENUM('true', 'false'),
-      Heuristic2 ENUM('true','false'),
-      Heuristic3 ENUM('true','false'),
-      Heuristic4 ENUM('true','false'),
-      UNIQUE (SENTID, Country, st_offset, end_offset, value, Relation)
-);
+-- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: test
+-- ------------------------------------------------------
+-- Server version	5.5.41-0ubuntu0.14.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `SentenceMatcher`
+--
+
+DROP TABLE IF EXISTS `SentenceMatcher`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SentenceMatcher` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `SENTID` varchar(20) NOT NULL,
+  `Country` varchar(100) NOT NULL,
+  `st_offset` int(11) NOT NULL,
+  `end_offset` int(11) NOT NULL,
+  `value` varchar(100) DEFAULT NULL,
+  `Relation` varchar(100) NOT NULL,
+  `Sentence` varchar(40000) NOT NULL,
+  `evaluation_file` varchar(100) DEFAULT NULL,
+  `response` enum('true','false') DEFAULT 'false',
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `unique_sent` (`Country`,`st_offset`,`end_offset`,`value`,`Relation`,`evaluation_file`)
+) ENGINE=InnoDB AUTO_INCREMENT=943 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SentenceMatcher`
+--
+
+LOCK TABLES `SentenceMatcher` WRITE;
+/*!40000 ALTER TABLE `SentenceMatcher` DISABLE KEYS */;
+/*!40000 ALTER TABLE `SentenceMatcher` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-03-27 16:20:31
